@@ -8,7 +8,7 @@ subtitle: ''
 description: ''
 keywords:
 author: recard
-language: en
+language: zh-CN
 timezone: ''
 
 # URL
@@ -97,9 +97,26 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: ''
+
+# hexo-bangumis 追番插件配置
+# 数据源：bgm.tv
+bangumis:
+  enable: true
+  path: bangumis/index.html
+  show: 1 # 展示 想看(0) 在看(1) 看完(2)
+  title: '追番列表'
+  quote: '生命不息，追番不止'
+  color_meta: "#555"
+  color_summary: "#555"
+  bgmtv_uid: 1261995 # 您的 Bangumi UID (或自定义 recard 字符用户名)
+  download_image: true # 自动下载封面并在本地缓存，保证图源稳定性
+  image_level: c # 封面清晰度等级 (l, c, m, s, g)
+  lazyload: false
+  margin: 20px
+

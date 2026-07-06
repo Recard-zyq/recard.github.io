@@ -1,0 +1,86 @@
+# ===============================================================
+# NexT 主题专属配置文件
+# 官方文档: https://theme-next.js.org/docs/getting-started/configuration
+# ===============================================================
+
+# ---------------------------------------------------------------
+# 核心外观风格 (Schemes)
+# ---------------------------------------------------------------
+# 默认启用最现代的 Gemini 风格，如需更改，注释 Gemini 并解开其他选项即可
+# scheme: Muse
+# scheme: Mist
+# scheme: Pisces
+scheme: Gemini
+
+# ---------------------------------------------------------------
+# 网站暗黑模式 (Dark Mode)
+# ---------------------------------------------------------------
+darkmode: true
+
+# ---------------------------------------------------------------
+# 菜单栏设置 (Menu)
+# ---------------------------------------------------------------
+menu:
+  home: / || fa fa-home
+  archives: /archives/ || fa fa-archive
+  追番: /bangumis/ || fa fa-film
+  # tags: /tags/ || fa fa-tags
+  # categories: /categories/ || fa fa-th
+  # about: /about/ || fa fa-user
+
+menu_settings:
+  icons: true
+  badges: true
+
+# ---------------------------------------------------------------
+# 侧边栏设置 (Sidebar)
+# ---------------------------------------------------------------
+sidebar:
+  position: left
+  display: post
+  padding: 18
+  offset: 12
+
+# 侧边栏头像
+avatar:
+  # 您可以在 source/images 目录下放置您的头像，并在这里填入路径 (例如: /images/avatar.png)
+  url: 
+  rounded: true
+  rotated: true
+
+# 社交链接
+social:
+  GitHub: https://github.com/Recard-zyq || fab fa-github
+  # E-Mail: mailto:yourname@gmail.com || fa fa-envelope
+
+social_icons:
+  enable: true
+  icons_only: false
+  transition: true
+
+# ---------------------------------------------------------------
+# 动画效果 & 功能设置
+# ---------------------------------------------------------------
+# 返回顶部按钮
+back2top:
+  enable: true
+  # 是否在侧边栏中显示返回顶部按钮
+  sidebar: true
+  # 是否显示滚动百分比
+  scrollpercent: true
+
+# 顶部加载进度条 (Pace)
+# 可选值: bounce | center-atom | center-circle | center-radar | center-simple
+#          | corner-indicator | fill-left | flash | flat-top | big-counter
+#          | minimal | mac-osx | rain
+pace:
+  enable: true
+  theme: minimal
+
+# 动画效果 (Animate)
+motion:
+  enable: true
+  async: true
+
+# 无刷新加载页面 (PJAX)
+pjax: true
