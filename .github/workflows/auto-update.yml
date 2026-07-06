@@ -36,3 +36,15 @@ jobs:
           git add .
           git commit -m "chore: auto-update bangumi data" -a || echo "No changes to commit"
           git push origin main
+
+      - name: Build static site
+        run: |
+          npx hexo clean
+          npx hexo generate
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: gh-pages
