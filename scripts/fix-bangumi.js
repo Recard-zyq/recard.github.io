@@ -49,7 +49,7 @@ hexo.extend.filter.register('after_render:html', function(htmlContent){
     const totalPages = Math.ceil(items.length / limit);
     let currentPage = 0;
     
-    function showPage(pageIndex) {
+    function showPage(pageIndex, isUserClick) {
       if (pageIndex < 0 || pageIndex >= totalPages) return;
       currentPage = pageIndex;
       items.forEach((item, idx) => {
@@ -66,12 +66,18 @@ hexo.extend.filter.register('after_render:html', function(htmlContent){
       if (pageNumText) {
         pageNumText.innerText = (currentPage + 1) + ' / ' + totalPages;
       }
+      if (isUserClick) {
+        const tabsElement = document.querySelector('.bangumi-tabs');
+        if (tabsElement) {
+          tabsElement.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
     }
     
-    if (firstBtn) firstBtn.addEventListener('click', () => showPage(0));
-    if (prevBtn) prevBtn.addEventListener('click', () => showPage(currentPage - 1));
-    if (nextBtn) nextBtn.addEventListener('click', () => showPage(currentPage + 1));
-    if (lastBtn) lastBtn.addEventListener('click', () => showPage(totalPages - 1));
+    if (firstBtn) firstBtn.addEventListener('click', () => showPage(0, true));
+    if (prevBtn) prevBtn.addEventListener('click', () => showPage(currentPage - 1, true));
+    if (nextBtn) nextBtn.addEventListener('click', () => showPage(currentPage + 1, true));
+    if (lastBtn) lastBtn.addEventListener('click', () => showPage(totalPages - 1, true));
     
     showPage(0);
   }
