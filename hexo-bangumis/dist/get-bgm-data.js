@@ -526,29 +526,29 @@ module.exports.getBgmData = /*#__PURE__*/function () {
           return batch(bangumiList.wantWatch);
         case 31:
           wantWatch = _context6.sent.sort(function (a, b) {
-            return a.updated_at - b.updated_at;
+            return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
           });
           _context6.next = 34;
           return batch(bangumiList.watching);
         case 34:
           watching = _context6.sent.sort(function (a, b) {
-            return a.updated_at - b.updated_at;
+            return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
           });
           _context6.next = 37;
           return batch(bangumiList.watched);
         case 37:
           watched = _context6.sent.sort(function (a, b) {
-            return a.updated_at - b.updated_at;
+            return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
           });
           _context6.next = 38;
           return Promise.all([batch(bangumiList.onHold), batch(bangumiList.dropped)]);
         case 38:
           var resVal = _context6.sent;
           onHold = resVal[0].sort(function (a, b) {
-            return a.updated_at - b.updated_at;
+            return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
           });
           dropped = resVal[1].sort(function (a, b) {
-            return a.updated_at - b.updated_at;
+            return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
           });
           result = {
             wantWatch: wantWatch,
