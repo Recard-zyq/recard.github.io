@@ -562,6 +562,7 @@ module.exports.getBgmData = /*#__PURE__*/function () {
           succeed = result.wantWatch.length + result.watching.length + result.watched.length + result.onHold.length + result.dropped.length;
           failed = total - succeed;
           log.info("Generated bangumis.json, total " + total + " bangumis, " + succeed + " succeed, " + failed + " failed");
+          process.exit(0);
           _context6.next = 44;
           break;
         case "end":
