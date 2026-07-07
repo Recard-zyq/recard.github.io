@@ -179,30 +179,36 @@ var getBangumiList = /*#__PURE__*/function () {
             for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
               i = _step2.value;
               subject_id = i.subject_id, updated_at = i.updated_at;
+              var tags = i.tags || [];
               if (i.type === 1) {
                 wantWatch.push({
                   subject_id: subject_id,
-                  updated_at: updated_at
+                  updated_at: updated_at,
+                  tags: tags
                 });
               } else if (i.type === 3) {
                 watching.push({
                   subject_id: subject_id,
-                  updated_at: updated_at
+                  updated_at: updated_at,
+                  tags: tags
                 });
               } else if (i.type === 2) {
                 watched.push({
                   subject_id: subject_id,
-                  updated_at: updated_at
+                  updated_at: updated_at,
+                  tags: tags
                 });
               } else if (i.type === 4) {
                 onHold.push({
                   subject_id: subject_id,
-                  updated_at: updated_at
+                  updated_at: updated_at,
+                  tags: tags
                 });
               } else if (i.type === 5) {
                 dropped.push({
                   subject_id: subject_id,
-                  updated_at: updated_at
+                  updated_at: updated_at,
+                  tags: tags
                 });
               }
             }
@@ -272,6 +278,7 @@ var getBangumi = /*#__PURE__*/function () {
             _context4.next = 16;
             break;
           }
+          read.tags = bgm.tags || [];
           return _context4.abrupt("return", read);
         case 16:
           _context4.next = 19;
@@ -317,7 +324,8 @@ var getBangumi = /*#__PURE__*/function () {
             date: item.date,
             summary: (_item$summary = item.summary) === null || _item$summary === void 0 ? void 0 : _item$summary.trim(),
             rating: item.rating,
-            updated_at: bgm.updated_at
+            updated_at: bgm.updated_at,
+            tags: bgm.tags || []
           };
           fs.writeFile(savedPath, JSON.stringify(obj), function (err) {
             if (err) {
@@ -371,6 +379,27 @@ var getImage = function getImage(image_url, imagesPath, image_level, imageBase) 
       log.info("Failed to download image " + image_url + ": " + err.message);
     });
   }
+};
+var getTagTime = function getTagTime(item) {
+  if (item.tags && Array.isArray(item.tags)) {
+    for (var i = 0; i < item.tags.length; i++) {
+      var match = /^(\d+)年(\d+)月$/.exec(item.tags[i]);
+      if (match) {
+        return parseInt(match[1], 10) * 12 + parseInt(match[2], 10);
+      }
+    }
+  }
+  if (item.date) {
+    var dateMatch = /^(\d{4})-(\d{2})/.exec(item.date);
+    if (dateMatch) {
+      return parseInt(dateMatch[1], 10) * 12 + parseInt(dateMatch[2], 10);
+    }
+  }
+  if (item.updated_at) {
+    var d = new Date(item.updated_at);
+    return d.getFullYear() * 12 + (d.getMonth() + 1);
+  }
+  return 0;
 };
 module.exports.getBgmData = /*#__PURE__*/function () {
   var _ref5 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee6(bgmtv_uid, download_image, image_level, source_dir) {
@@ -526,29 +555,29 @@ module.exports.getBgmData = /*#__PURE__*/function () {
           return batch(bangumiList.wantWatch);
         case 31:
           wantWatch = _context6.sent.sort(function (a, b) {
-            return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
+            return getTagTime(b) - getTagTime(a);
           });
           _context6.next = 34;
           return batch(bangumiList.watching);
         case 34:
           watching = _context6.sent.sort(function (a, b) {
-            return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
+            return getTagTime(b) - getTagTime(a);
           });
           _context6.next = 37;
           return batch(bangumiList.watched);
         case 37:
           watched = _context6.sent.sort(function (a, b) {
-            return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
+            return getTagTime(b) - getTagTime(a);
           });
           _context6.next = 38;
           return Promise.all([batch(bangumiList.onHold), batch(bangumiList.dropped)]);
         case 38:
           var resVal = _context6.sent;
           onHold = resVal[0].sort(function (a, b) {
-            return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
+            return getTagTime(b) - getTagTime(a);
           });
           dropped = resVal[1].sort(function (a, b) {
-            return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
+            return getTagTime(b) - getTagTime(a);
           });
           result = {
             wantWatch: wantWatch,
