@@ -356,7 +356,7 @@ var getBangumi = /*#__PURE__*/function () {
 }();
 var getImage = function getImage(image_url, imagesPath, image_level, imageBase) {
   if (image_url && !fs.existsSync("".concat(imagesPath, "/").concat(image_url))) {
-    fetch("".concat(imageBase, "/pic/cover/").concat(image_level, "/").concat(image_url), {
+    fetchWithTimeout("".concat(imageBase, "/pic/cover/").concat(image_level, "/").concat(image_url), {
       method: 'GET',
       headers: {
         'Content-Type': 'application/octet-stream'
@@ -365,8 +365,10 @@ var getImage = function getImage(image_url, imagesPath, image_level, imageBase) 
       return res.buffer();
     }).then(function (image) {
       fs.writeFile("".concat(imagesPath, "/").concat(image_url), image, 'binary', function (err) {
-        console.error(err);
+        if (err) console.error(err);
       });
+    }).catch(function (err) {
+      log.info("Failed to download image " + image_url + ": " + err.message);
     });
   }
 };
